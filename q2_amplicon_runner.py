@@ -1707,6 +1707,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--trim_left_r", default=0, type=int, help="DADA2 trim-left R.")
     p.add_argument("--trunc_len_f", default=0, type=int, help="DADA2 trunc-len F.")
     p.add_argument("--trunc_len_r", default=0, type=int, help="DADA2 trunc-len R.")
+    # max_ee of 2.0 was too strict in our tests, leading to very few reads passing. 
+    # 5.0 is more reasonable for typical Illumina data, but users can adjust as needed.
     p.add_argument("--max_ee_f", default=5.0, type=float, help="DADA2 maxEE F.")
     p.add_argument("--max_ee_r", default=5.0, type=float, help="DADA2 maxEE R.")
 
@@ -1722,7 +1724,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
                 "overhangs are still present."))
 
     # Deblur knob
-    p.add_argument("--deblur_trim_length", default=0, type=int, help="Deblur trim length.")
+    p.add_argument("--deblur_trim_length", default=200, type=int, help="Deblur trim length.")
     # flash merge options
     p.add_argument("--flash_min_overlap", type=int, default=20,
                 help="FLASH: minimum required overlap (-m).")
